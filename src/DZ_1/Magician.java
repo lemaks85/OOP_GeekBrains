@@ -5,19 +5,14 @@ public class Magician extends HeroySet {
     private int Mana;
     private int PowerAttack;
 
-    public Magician(String name, int hp, int armor) {
-        super(name, 150, 100);
+    public Magician(String name, int hp, int armor, int x, int y) {
+        super(name, 150, 100, x, y);
         this.Mana = 80;
         this.PowerAttack = 10;
     }
 
     @Override
-    public String GetInfo() {
-        return String.format("Name: %s    Hp: %d Armor: %d Mana:    %d           Class: %s",
-                this.Name,
-                this.Hp,
-                this.Armor,
-                this.Mana,
-                this.getClass().getSimpleName());
+    public String toString() {
+        return (getClass().getSimpleName() + "---" + Name + "---" + coordinateHero.x + ":" + coordinateHero.y );
     }
 }
