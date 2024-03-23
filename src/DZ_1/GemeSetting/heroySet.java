@@ -1,26 +1,31 @@
-package DZ_1;
+package DZ_1.GemeSetting;
 
 import java.util.ArrayList;
 
-public abstract class HeroySet {
+public abstract class heroySet implements moveHero {
+
+    public int priority;
     protected String Name;
     protected int Hp;
     protected int Armor;
-    protected CoordinateHero coordinateHero;
+
+    protected DZ_1.GemeSetting.coordinateHero coordinateHero;
 
 
-    public HeroySet(String name, int hp, int armor, int x, int y) {
+    public heroySet(String name, int hp, int armor, int x, int y, int priority) {
         this.Name = name;
         this.Hp = hp;
         this.Armor = armor;
-        this.coordinateHero = new CoordinateHero(x, y);
+        this.priority = priority;
+        this.coordinateHero = new coordinateHero(x, y);
     }
-    public HeroySet findNearestPerson(ArrayList<HeroySet> persons)
+    public abstract String toString();
+    public heroySet findNearestPerson(ArrayList<heroySet> persons)
     {
-        HeroySet target = null;
+        heroySet target = null;
         float minDistance = Float.MAX_VALUE;
 
-        for (HeroySet p : persons)
+        for (heroySet p : persons)
         {
             if (p.Hp > 0)
             {
@@ -34,5 +39,6 @@ public abstract class HeroySet {
         }
         return target;
     }
+
 
 }

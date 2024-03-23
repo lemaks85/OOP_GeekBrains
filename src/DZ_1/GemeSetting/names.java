@@ -1,5 +1,5 @@
-package DZ_1;
+package DZ_1.GemeSetting;
 
-public enum Names  {
+public enum names {
     Wolfer, Blade, Zobenos, Foedus, Daspecori, Indanaur, Jandasan;
 }
