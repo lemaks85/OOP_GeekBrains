@@ -1,5 +1,22 @@
 package DZ_1.GemeSetting;
 
-public enum names {
-    Wolfer, Blade, Zobenos, Foedus, Daspecori, Indanaur, Jandasan;
+import java.util.Random;
+
+public class names {
+    private static Random rnd;
+    private static String[] names = {"Wolfer", "Blade", "Zobenos", "Foedus", "Daspecori", "Indanaur", "Jandasan"};
+
+    static {
+        rnd = new Random();
+    }
+
+    public static String getName(int index) {
+        if (index >= names.length)
+            index = 0;
+        return names[index];
+    }
+
+    public static String getRandomName() {
+        return names[rnd.nextInt(names.length)];
+    }
 }

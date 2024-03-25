@@ -1,34 +1,28 @@
 package DZ_1.Heroes;
 
-import DZ_1.GemeSetting.heroySet;
+import DZ_1.GemeSetting.coordinateHero;
+import DZ_1.GemeSetting.magicianSet;
 
-import java.util.ArrayList;
+public class monk extends magicianSet {
+    private static final int HEALTH = 600;
+    private static final int POWER = 40;
+    private static final int AGILITY = 10;
+    private static final int DEFENCE = 0;
+    private static final int DISTANCE = 8;
+    private static final int MANA = 100;
 
-public class monk extends heroySet {
-    private int Elixir;
-    private int Healing;
 
-    public monk(String name, int hp, int armor, int x, int y) {
-        super(name, 150, 100, x, y,1);
-        this.Elixir = 80;
-        this.Healing = 300;
-
+    public monk(String name, coordinateHero pos) {
+        super(name, 1, HEALTH, POWER, AGILITY, DEFENCE, DISTANCE, MANA, pos);
     }
 
     @Override
     public String toString() {
-        return (getClass().getSimpleName() + "---" + Name +  "---" + coordinateHero.getX() + ":" + coordinateHero.getY());
-
+        return String.format("[Monk] %s, ❤️=%d, \uD83D\uDD25=%d, %s", name, health, mana, position.toString());
     }
-
 
     @Override
-    public void step(ArrayList<heroySet> enemies, ArrayList<heroySet> friends) {
-
+    public String getInfo() {
+        return "Monk";
     }
 }
-
-
-
-
-

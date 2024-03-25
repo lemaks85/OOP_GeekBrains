@@ -1,45 +1,33 @@
 package DZ_1.Heroes;
 
+
+import DZ_1.GemeSetting.coordinateHero;
 import DZ_1.GemeSetting.heroySet;
+import DZ_1.GemeSetting.infantrySet;
 
 import java.util.ArrayList;
 
-public class outlaw extends heroySet {
-    private int PowerAttack;
+public class outlaw extends infantrySet {
+    private static final int HEALTH = 1000;
+    private static final int POWER = 70;
+    private static final int AGILITY = 60;
+    private static final int DEFENCE = 10;
+    private static final int DISTANCE = 1;
 
-    public outlaw(String name, int hp, int armor, int x, int y) {
-        super(name, 150, 100, x, y,2);
-        this.PowerAttack = 15;
 
+    public outlaw(String name, coordinateHero pos) {
+        super(name, 2, HEALTH, POWER, AGILITY, DEFENCE, DISTANCE, pos);
     }
+
 
     @Override
     public String toString() {
-        return (getClass().getSimpleName() + "---" + Name + "---"+ coordinateHero.getX() + ":" + coordinateHero.getY());
-
+        return String.format("[Robber] %s, ❤️=%d, %s", name, health, position.toString());
     }
 
 
     @Override
-    public void step(ArrayList<heroySet> enemies, ArrayList<heroySet> friends) {
-
-        heroySet target = this.findNearestPerson(enemies);
-        if (Hp <= 0 || target == null)
-            return;
-
-        if (position.distanceTo(target.position) < 1.5f)
-        {
-            // бьём
-            attack(target, false);
-        } else {
-            move(target, friends);
-            if (position.distanceTo(target.position) < 1.5f)
-            {
-                // бьём с ходу, с меньшей силой
-                attack(target, true);
-            }
-        }
-
-    }
+    public String getInfo() {
+        return "Robber " + history;
     }
 }

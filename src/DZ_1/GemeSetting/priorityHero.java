@@ -1,7 +1,7 @@
 package DZ_1.GemeSetting;
 
 import java.util.Comparator;
-import DZ_1.Heroes.*;
+
 
 public class priorityHero implements Comparator<heroySet> {
 
