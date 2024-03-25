@@ -22,7 +22,7 @@ public class sniper extends shooterSet {
 
     @Override
     public String toString() {
-        return String.format("[Sniper] %s, ❤️=%d, \uD83C\uDFF9=%d, %s", name, health, ammo, position.toString());
+        return String.format("[Sniper] %s, %d, %d, %s", name, health, ammo, position.toString());
     }
 
     @Override

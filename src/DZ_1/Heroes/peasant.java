@@ -34,7 +34,7 @@ public class peasant extends heroySet {
 
     @Override
     public String toString() {
-        return String.format("[Peasant] %s, ❤️=%d, \uD83C\uDFF9=%d, %s", name, health, bag, position.toString());
+        return String.format("[Peasant] %s, %d, %d, %s", name, health, bag, position.toString());
     }
 }
 

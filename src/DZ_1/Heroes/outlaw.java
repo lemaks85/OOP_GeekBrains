@@ -22,7 +22,7 @@ public class outlaw extends infantrySet {
 
     @Override
     public String toString() {
-        return String.format("[Robber] %s, ❤️=%d, %s", name, health, position.toString());
+        return String.format("[Robber] %s, %d, %s", name, health, position.toString());
     }
 
 

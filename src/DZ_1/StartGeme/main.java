@@ -3,6 +3,7 @@ package DZ_1.StartGeme;
 import DZ_1.GemeSetting.coordinateHero;
 import DZ_1.GemeSetting.heroySet;
 import DZ_1.GemeSetting.names;
+import DZ_1.GemeSetting.view;
 import DZ_1.Heroes.*;
 
 import java.util.ArrayList;
@@ -84,11 +85,10 @@ public class main {
                     team.add(new outlaw(names.getRandomName(), new coordinateHero(0, cy)));
                     break;
                 default:
-                    System.out.println("ERROR! Пересмотри алгоритм, ламер!");
+                    System.out.println("ERROR!");
             }
             cy++;
         }
     }
-
 }
 

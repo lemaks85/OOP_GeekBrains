@@ -18,7 +18,7 @@ public class arbalester extends shooterSet {
 
     @Override
     public String toString() {
-        return String.format("[Arbalester] %s, ❤️=%d, \uD83C\uDFF9=%d, %s", name, health, ammo, position.toString());
+        return String.format("[Arbalester] %s, %d, %d, %s", name, health, ammo, position.toString());
     }
 
     @Override

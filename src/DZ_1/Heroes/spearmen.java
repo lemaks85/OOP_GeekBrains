@@ -20,7 +20,7 @@ public class spearmen extends infantrySet {
 
     @Override
     public String toString() {
-        return String.format("[Spearman] %s, ❤️=%d, %s", name, health, position.toString());
+        return String.format("[Spearman] %s, %d, %s", name, health, position.toString());
     }
 
 
