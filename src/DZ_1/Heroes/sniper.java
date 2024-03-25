@@ -1,10 +1,9 @@
 package DZ_1.Heroes;
 
 import DZ_1.GemeSetting.coordinateHero;
-import DZ_1.GemeSetting.heroySet;
 import DZ_1.GemeSetting.shooterSet;
 
-import java.util.ArrayList;
+
 
 public class sniper extends shooterSet {
     private static final int HEALTH = 800;
