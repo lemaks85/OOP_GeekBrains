@@ -16,6 +16,14 @@ public abstract class shooterSet extends heroySet{
     }
 
 
+    public int getAmmo() {
+        return ammo;
+    }
+
+    public void setAmmo(int ammo) {
+        this.ammo = ammo;
+    }
+
     protected void shot(heroySet target) {
         ammo--;
         float dist = position.distanceTo(target.position);
