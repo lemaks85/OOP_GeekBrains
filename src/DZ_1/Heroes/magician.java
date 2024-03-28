@@ -20,7 +20,7 @@ public class magician extends magicianSet {
 
     @Override
     public String toString() {
-        return String.format("[magician] (%s) %s { ❤️=%d, \uD83D\uDD25=%d }", position.toString(), name, health, mana);
+        return String.format("[magician] (%s) %s { Hp->%d, Mana->%d }", position.toString(), name, health, mana);
     }
 
 

@@ -19,7 +19,7 @@ public class arbalester extends shooterSet {
 
     @Override
     public String toString() {
-        return String.format("[arbalester] (%s) %s { ❤️=%d, \uD83C\uDFF9=%d }", position.toString(), name, health, ammo);
+        return String.format("[arbalester] (%s) %s { Hp->%d, Bolt->%d }", position.toString(), name, health, ammo);
     }
 
 

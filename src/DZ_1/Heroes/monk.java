@@ -18,7 +18,7 @@ public class monk extends magicianSet {
 
     @Override
     public String toString() {
-        return String.format("[monk] (%s) %s { ❤️=%d, \uD83D\uDD25=%d }", position.toString(), name, health, mana);
+        return String.format("[monk] (%s) %s { Hp->%d, Elexir->%d }", position.toString(), name, health, mana);
     }
 
 

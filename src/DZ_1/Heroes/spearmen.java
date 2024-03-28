@@ -18,7 +18,7 @@ public class spearmen extends infantrySet {
 
     @Override
     public String toString() {
-        return String.format("[spearmen] (%s) %s { ❤️=%d }", position.toString(), name, health);
+        return String.format("[spearmen] (%s) %s { Hp%d }", position.toString(), name, health);
     }
 
 
