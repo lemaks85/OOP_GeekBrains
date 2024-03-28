@@ -3,21 +3,23 @@ package DZ_1.GemeSetting;
 public class coordinateHero {
     private int curX;
     private int curY;
+
     private static int width;
     private static int height;
-
 
     static {
         width = 10;
         height = 10;
     }
 
-
     public coordinateHero(int x, int y) {
         curX = x;
         curY = y;
     }
 
+    /*
+        Геттеры и сеттеры
+     */
     public void setXY(int x, int y) {
         curX = x;
         curY = y;
@@ -53,6 +55,7 @@ public class coordinateHero {
         curY += dy;
     }
 
+
     public boolean isMove(int x, int y) {
         return x >= 0 && x < width && y >= 0 && y < height;
     }
@@ -68,10 +71,6 @@ public class coordinateHero {
         float tx = curX + dx - target.getX();
         float ty = curY + dy - target.getY();
         return (tx * tx + ty * ty);
-    }
-
-    public coordinateHero getDelta(coordinateHero to) {
-        return new coordinateHero(to.curX - curX, to.curY - curY);
     }
 
 

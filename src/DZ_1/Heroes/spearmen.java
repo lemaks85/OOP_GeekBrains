@@ -18,14 +18,8 @@ public class spearmen extends infantrySet {
 
     @Override
     public String toString() {
-        return String.format("[Spearman] %s, %d, %s", name, health, position.toString());
+        return String.format("[spearmen] (%s) %s { ❤️=%d }", position.toString(), name, health);
     }
 
 
-    @Override
-    public String getInfo() {
-        return "Spearmen " + history;
-    }
 }
-
-

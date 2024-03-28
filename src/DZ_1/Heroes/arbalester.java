@@ -12,17 +12,15 @@ public class arbalester extends shooterSet {
     private static final int ARROWS = 12;
     private static final int EFFECTIVE_DISTANCE = 3;
 
+
     public arbalester(String name, coordinateHero pos) {
         super(name, 3, HEALTH, POWER, AGILITY, DEFENCE, DISTANCE, ARROWS, EFFECTIVE_DISTANCE, pos);
     }
 
     @Override
     public String toString() {
-        return String.format("[Arbalester] %s, %d, %d, %s", name, health, ammo, position.toString());
+        return String.format("[arbalester] (%s) %s { ❤️=%d, \uD83C\uDFF9=%d }", position.toString(), name, health, ammo);
     }
 
-    @Override
-    public String getInfo() {
-        return "Arbalester " + history;
-    }
+
 }

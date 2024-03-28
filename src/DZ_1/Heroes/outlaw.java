@@ -20,12 +20,8 @@ public class outlaw extends infantrySet {
 
     @Override
     public String toString() {
-        return String.format("[Robber] %s, %d, %s", name, health, position.toString());
+        return String.format("[outlaw] (%s) %s { ❤️=%d }", position.toString(), name, health);
     }
 
 
-    @Override
-    public String getInfo() {
-        return "Robber " + history;
-    }
 }

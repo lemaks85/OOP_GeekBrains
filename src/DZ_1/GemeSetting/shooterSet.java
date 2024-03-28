@@ -2,15 +2,17 @@ package DZ_1.GemeSetting;
 
 import java.util.ArrayList;
 
-public abstract class shooterSet extends heroySet{
-    protected int ammo;
-    protected int level;
-    protected int effectiveDistance;
+public abstract class shooterSet extends heroySet {
+    protected int ammo;                         // боеприпасов в наличии
+    protected int maxAmmo;
+    protected int level;                        // уровень (зависит от опыта и даёт увеличение урона)
+    protected int effectiveDistance;            // макс. дальность эффективной стрельбы
 
 
     protected shooterSet(String name, int priority, int health, int power, int agility, int defence, int distance, int ammo, int effectiveDistance, coordinateHero pos) {
         super(name, priority, health, power, agility, defence, distance, pos);
         this.ammo = ammo;
+        this.maxAmmo = ammo;
         this.effectiveDistance = effectiveDistance;
         this.level = 1;
     }
@@ -20,8 +22,12 @@ public abstract class shooterSet extends heroySet{
         return ammo;
     }
 
+    public int getMaxAmmo() {
+        return maxAmmo;
+    }
+
     public void setAmmo(int ammo) {
-        this.ammo = ammo;
+        this.ammo = Math.min(ammo, maxAmmo);
     }
 
     protected void shot(heroySet target) {
@@ -38,17 +44,35 @@ public abstract class shooterSet extends heroySet{
             damage *= 2.0f;
         }
         int res = target.getDamage(damage);
+
+        history = String.format(" атаковал %s ", target);
+        if (res == 0) {
+            history += "но он увернулся!";
+        } else {
+            history += "и нанёс ";
+            if (critical) {
+                history += "критический ";
+            }
+            history += "урон в " + res;
+        }
     }
 
 
     @Override
     public void step(ArrayList<heroySet> enemies, ArrayList<heroySet> friends) {
-        if (health <= 0 || ammo <= 0) {
+        history = "";
+
+        if (health <= 0)
             return;
-        }
-        heroySet target = this.findNearestPerson(enemies);
-        if (target != null) {
-            shot(target);
+
+        if (ammo > 0) {
+            heroySet target = this.findNearestPerson(enemies);
+            if (target != null) {
+                shot(target);
+            }
+        } else {
+            history = String.format(" ждёт подвоза стрел.");
         }
     }
+
 }

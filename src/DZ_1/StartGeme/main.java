@@ -1,9 +1,6 @@
 package DZ_1.StartGeme;
 
-import DZ_1.GemeSetting.coordinateHero;
-import DZ_1.GemeSetting.heroySet;
-import DZ_1.GemeSetting.names;
-import DZ_1.GemeSetting.view;
+import DZ_1.GemeSetting.*;
 import DZ_1.Heroes.*;
 
 import java.util.ArrayList;
@@ -55,6 +52,26 @@ public class main {
                 return true;
         }
         return false;
+    }
+
+
+    public static void setDied(ArrayList<heroySet> team, int num) {
+        for (heroySet p : team) {
+            if (p instanceof magician || p instanceof monk)
+                continue;
+            p.healed(-p.getHealth());
+            num--;
+            if (num <= 0)
+                break;
+        }
+    }
+
+    public static void setManas(ArrayList<heroySet> team, int mana) {
+        for (heroySet p : team) {
+            if (p instanceof magician || p instanceof monk) {
+                ((magicianSet) p).setMana(mana);
+            }
+        }
     }
 
     public static void createTeam(ArrayList<heroySet> team, int num, int start) {

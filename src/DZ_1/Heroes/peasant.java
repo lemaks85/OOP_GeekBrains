@@ -12,9 +12,9 @@ public class peasant extends heroySet {
     private static final int AGILITY = 30;
     private static final int DEFENCE = 0;
     private static final int DISTANCE = 1;
-    private static final int FULL_BAG = 24;
+    private static final int FULL_BAG = 240;
 
-    private final int bag;
+    private int bag;
 
 
     public peasant(String name, coordinateHero pos) {
@@ -25,33 +25,38 @@ public class peasant extends heroySet {
 
     @Override
     public void step(ArrayList<heroySet> enemies, ArrayList<heroySet> friends) {
-        heroySet hs = null;
+        history = "";
+
+        if (health <= 0 || bag <= 0)
+            return;
+        shooterSet p = (shooterSet) getShooter(friends);
+        if (p != null) {
+            if (p.getAmmo() < p.getMaxAmmo()) {
+                p.setAmmo(p.getAmmo() + 1);
+                bag--;
+                history = String.format(" дал стрелу %s", p);
+            }
+        }
+    }
+
+
+    private heroySet getShooter(ArrayList<heroySet> friends) {
+        heroySet p = null;
         int min = Integer.MAX_VALUE;
-        if (health <= 0) return;
+
         for (heroySet friend : friends) {
-            if (friend instanceof shooterSet) {
-                if (((shooterSet) friend).getAmmo() < min) {
+            if (friend.getHealth() > 0 && friend instanceof shooterSet) {
+                if (min > ((shooterSet) friend).getAmmo()) {
                     min = ((shooterSet) friend).getAmmo();
-                    hs = friend;
+                    p = friend;
                 }
             }
         }
-        if (hs != null)
-            ((shooterSet) hs).setAmmo(min + 1);
+        return p;
     }
-
-    @Override
-    public String getInfo() {
-        return null;
-    }
-
 
     @Override
     public String toString() {
-        return String.format("[Peasant] %s, %d, %d, %s", name, health, bag, position.toString());
+        return String.format("[peasant] (%s) %s { ❤️=%d, \uD83C\uDFF9=%d }", position.toString(), name, health, bag);
     }
-
 }
-
-
-

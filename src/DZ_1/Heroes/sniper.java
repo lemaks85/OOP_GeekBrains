@@ -4,7 +4,6 @@ import DZ_1.GemeSetting.coordinateHero;
 import DZ_1.GemeSetting.shooterSet;
 
 
-
 public class sniper extends shooterSet {
     private static final int HEALTH = 800;
     private static final int POWER = 30;
@@ -21,12 +20,8 @@ public class sniper extends shooterSet {
 
     @Override
     public String toString() {
-        return String.format("[Sniper] %s, %d, %d, %s", name, health, ammo, position.toString());
+        return String.format("[sniper] (%s) %s { ❤️=%d, \uD83C\uDFF9=%d }", position.toString(), name, health, ammo);
     }
 
-    @Override
-    public String getInfo() {
-        return "Sniper";
-    }
+
 }
-

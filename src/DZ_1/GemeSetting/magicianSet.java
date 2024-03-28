@@ -1,76 +1,149 @@
 package DZ_1.GemeSetting;
 
+import java.util.LinkedList.*;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public abstract class magicianSet extends heroySet {
-    protected int mana;                   
-    protected int maxMana;
 
-    
+public abstract class magicianSet extends heroySet {
+    private static final int COST_HEALED = 10;  // кол-во маны за процедуру лечения
+    private static final int MANA_RECOVERY = 5; // кол-во восстанавливаемой маны за ход ожидания
+    private static final int MANA_TO_HEAL = 3;  // коэфф. конвертации маны в здоровье
+
+    protected int mana;                     // мана для волшебства
+    protected int maxMana;
+    private int resurrectMana;              // необходимое кол-во маны для воскрешения
+    private heroySet respawnTarget;       // наша цель на воскрешение
+
+
     protected magicianSet(String name, int priority, int health, int power, int agility, int defence, int distance, int mana, coordinateHero pos) {
         super(name, priority, health, power, agility, defence, distance, pos);
         this.mana = mana;
         this.maxMana = mana;
+        this.resurrectMana = mana / 2;
+        this.respawnTarget = null;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
     }
 
     @Override
     public void step(ArrayList<heroySet> enemies, ArrayList<heroySet> friends) {
-        heroySet pt = null;
-        int min = Integer.MAX_VALUE;
+        history = "";
+
         if (health <= 0)
             return;
-        if (mana <= 0) {
-            mana += 5;
-            return;
-        }
-        if (getDieds(friends) > 3 ){
-            doRes(friends);
+        mana = Math.min(mana + MANA_RECOVERY, maxMana);
 
-        }
-        else doHealth(friends);
-
-    }
-    private void doRes(ArrayList<heroySet> friends){
-        if (mana < 50)
+        if (isWaitResurrection(friends))
             return;
-        heroySet pt = friends.stream()
-                .filter(n-> n.health == 0)
-                .sorted((n1, n2) -> n2.priority - n1.priority)
-                .collect(Collectors.toList())
-                .getFirst();
-                
-        pt.healed(Integer.MAX_VALUE);
-        mana -= 50;
+
+        if (getNumOfDead(friends, mana >= resurrectMana) > 3) {
+            beginResurrection(friends);     // воскрешаем
+        } else {
+            doHeal(friends);                // лечим
+        }
     }
 
+    private void beginResurrection(ArrayList<heroySet> friends) {
+        heroySet p = null;
+        int max = -1;
+        for (heroySet person : friends) {
+            if (person.getHealth() < 0 && mana >= resurrectMana) {
+                p = person;                 // нашли ожидающего, он у нас в приоритете
+                break;
+            }
+            if (person.getHealth() == 0 && max < person.getPriority()) {
+                p = person;
+                max = person.getPriority();
+            }
+        }
 
-    private void doHealth(ArrayList<heroySet> friends) {
-        heroySet pt = null;
+        if (p != null) {
+            respawnTarget = p;
+            if (mana >= resurrectMana) {
+                doResurrection(p);
+            } else {
+                respawnTarget.health = -1;
+                history = String.format(" восстанавливает ману для воскрешения %s", respawnTarget);
+            }
+        }
+    }
+
+
+    private boolean isWaitResurrection(ArrayList<heroySet> friends) {
+        if (respawnTarget == null || respawnTarget.getHealth() >= 0) {
+            respawnTarget = null;               // некого воскрешать (или уже воскресили)
+            return false;
+        }
+        if (mana >= resurrectMana) {
+            doResurrection(respawnTarget);      // воскрешаем
+        } else {
+            history = String.format(" восстанавливает ману для воскрешения %s", respawnTarget);
+        }
+        return true;
+    }
+
+
+    private void doResurrection(heroySet person) {
+        if (respawnTarget.getHealth() <= 0) {
+            person.healed(respawnTarget.getMaxHealth());
+            mana -= resurrectMana;
+            history = String.format(" воскресил %s", respawnTarget);
+        } else {
+            history = String.format(" не нашел погибшего для воскрешения!");
+        }
+        respawnTarget = null;
+    }
+
+
+    private void doHeal(ArrayList<heroySet> friends) {
         int min = Integer.MAX_VALUE;
+        heroySet p = null;
         for (heroySet friend : friends) {
-            int hp = friend.getHealth();
-            if (hp > 0 && hp < friend.maxHealth) {
-                hp = hp * 100 / maxHealth;
-                if (hp < min) {
-                    min = hp;
-                    pt = friend;
-                }
+            int hp = friend.getHealth() * 100 / friend.getMaxHealth();
+            if (hp > 0 && hp < min) {
+                min = hp;
+                p = friend;
             }
         }
-        if (pt != null) {
-            int ig71 = 10;
-            mana -= 10;
-            if (mana < 0) {
-                ig71 += mana;
-                mana = 0;
-            }
-            pt.healed(ig71 * 3);
+        if (p != null && min < 100) {
+            int hp = p.getHealth();
+            int needMana = (p.getMaxHealth() - hp) / MANA_TO_HEAL;      // кол-во маны для полного лечения
+            int n = Math.min(mana, Math.min(needMana, COST_HEALED));
+            mana -= n;
+            p.healed(n * MANA_TO_HEAL);
+            history = String.format(" вылечил %s на %d пунктов здоровья", p, p.getHealth() - hp);
+        } else {
+            history = String.format(" пропускает ход.");
         }
     }
 
-    int getDieds(ArrayList<heroySet> paris) {
-        return (int) paris.stream().filter(n -> n.health == 0).count();
+
+    private int getNumOfDead(ArrayList<heroySet> friends, boolean isReservation) {
+//        return (int) friends.stream().filter(n -> n.getHealth() <= 0).count();
+        int count = 0;
+        for (heroySet friend : friends) {
+            if (friend.getHealth() == 0)
+                count++;
+            else if (friend.getHealth() < 0 && isReservation)
+                count++;
+        }
+        return count;
     }
 
+
+    @Override
+    public int getDamage(int damage) {
+        int hp = super.getDamage(damage);
+        if (health <= 0) {
+            if (respawnTarget != null) {
+                if (respawnTarget.getHealth() < 0)
+                    respawnTarget.health = 0;
+                respawnTarget = null;
+            }
+        }
+        return hp;
+    }
 }
